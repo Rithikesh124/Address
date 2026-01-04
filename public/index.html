@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BIP84 Multi-Coin Generator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        textarea { width: 100%; height: 100px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+        pre { background: #eee; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BIP84 Wallet Generator</h2>
+        <label>Enter 12/24 Word Phrase:</label>
+        <textarea id="mnemonic" placeholder="abandon abandon..."></textarea>
+        
+        <label>Coins (Comma separated, e.g., BTC, LTC, DOGE):</label>
+        <input type="text" id="coins" value="BTC, LTC" style="width: 100%; margin: 10px 0;">
+        
+        <button onclick="generate()">Generate Addresses</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        async function generate() {
+            const mnemonic = document.getElementById('mnemonic').value;
+            const coins = document.getElementById('coins').value.split(',').map(c => c.trim());
+            const output = document.getElementById('output');
+            output.innerHTML = "Processing...";
+
+            const res = await fetch('/api/derive', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mnemonic, coins, count: 5 })
+            });
+
+            const data = await res.json();
+            output.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>
