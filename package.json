@@ -1,0 +1,11 @@
+{
+  "name": "bip84-multi-coin-generator",
+  "version": "1.0.0",
+  "dependencies": {
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.5",
+    "tiny-secp256k1": "^2.2.3",
+    "bip44-constants": "^46.0.0"
+  }
+}
